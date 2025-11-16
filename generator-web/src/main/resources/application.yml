@@ -1,0 +1,18 @@
+spring:
+  profiles:
+    active: dev
+
+
+codegen:
+  template:
+    default-engine: freemarker
+    fallback-engine: velocity
+    cache-templates: false
+
+  frontend:
+    vue3-template-path: classpath:/templates/frontend/vue3/
+    react-template-path: classpath:/templates/frontend/react/
+
+  orm:
+    mybatis-plus-template-path: classpath:/templates/mybatis-plus/
+    jpa-template-path: classpath:/templates/jpa/
