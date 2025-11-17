@@ -1,9 +1,7 @@
-package com.small.rose.web.service;
+package com.small.rose.core.service;
 
 import com.small.rose.core.bean.GeneratorConfig;
 import com.small.rose.core.bean.TableMeta;
-import com.small.rose.core.service.CodePreviewGenerator;
-import com.small.rose.core.service.MetadataExtractor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

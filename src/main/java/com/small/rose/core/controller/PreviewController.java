@@ -1,8 +1,8 @@
-package com.small.rose.web.controller;
+package com.small.rose.core.controller;
 
 import com.small.rose.core.base.Result;
 import com.small.rose.core.bean.GeneratorConfig;
-import com.small.rose.web.service.PreviewService;
+import com.small.rose.core.service.PreviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PathVariable;

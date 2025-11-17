@@ -1,6 +1,8 @@
 package com.small.rose.core.bean;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @Project: code-generator
@@ -12,6 +14,8 @@ import lombok.Data;
  */
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class GeneratorRequest {
     private GeneratorConfig config;
     private String tableName;

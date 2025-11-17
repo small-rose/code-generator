@@ -1,6 +1,8 @@
 package com.small.rose.core.bean;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @Project: code-generator
@@ -10,7 +12,10 @@ import lombok.Data;
  * @Date: 2025/11/17 017 0:09
  * @Version: v1.0
  */
+
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class DataSourceConfig {
 
     private String url;

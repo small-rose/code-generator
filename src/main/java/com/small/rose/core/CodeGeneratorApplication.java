@@ -1,4 +1,4 @@
-package com.small.rose.web;
+package com.small.rose.core;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

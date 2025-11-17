@@ -1,4 +1,4 @@
-package com.small.rose.web.controller;
+package com.small.rose.core.controller;
 
 import com.small.rose.core.base.Result;
 import com.small.rose.core.bean.DataSourceConfig;

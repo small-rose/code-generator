@@ -1,6 +1,8 @@
 package com.small.rose.core.bean;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +15,10 @@ import java.util.Map;
  * @Date: 2025/11/16 016 22:58
  * @Version: v1.0
  */
+
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class GeneratorConfig {
 
     // 数据源配置
