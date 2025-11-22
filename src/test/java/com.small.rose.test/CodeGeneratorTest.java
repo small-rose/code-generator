@@ -1,5 +1,6 @@
 package com.small.rose.test;
 
+import com.small.rose.core.bean.DataSourceConfig;
 import com.small.rose.core.bean.GeneratorConfig;
 import com.small.rose.core.service.CodeGenerator;
 import org.junit.Test;
@@ -21,11 +22,18 @@ public class CodeGeneratorTest {
     private CodeGenerator codeGenerator;
 
     @Test
-    void testGenerateProject() {
+    public void testGenerateProject() {
         GeneratorConfig config = new GeneratorConfig();
-        config.setUrl("jdbc:mysql://localhost:3306/test");
-        config.setUsername("root");
-        config.setPassword("123456");
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        dataSourceConfig.setUrl("jdbc:h2:file:./data/demo");
+        dataSourceConfig.setUsername("sa");
+        dataSourceConfig.setPassword("123456");
+        dataSourceConfig.setDriverClassName("org.h2.Driver");
+
+        config.setUsername(dataSourceConfig.getUsername());
+        config.setPassword(dataSourceConfig.getPassword());
+        config.setUrl(dataSourceConfig.getUrl());
+        config.setDriverClassName(dataSourceConfig.getDriverClassName());
         config.setProjectName("demo-project");
         config.setPackageName("com.example.demo");
         config.setAuthor("Code Generator");
@@ -43,16 +51,25 @@ public class CodeGeneratorTest {
     }
 
     @Test
-    void testGenerateSingleTable() {
+    public void testGenerateSingleTable() {
         GeneratorConfig config = new GeneratorConfig();
-        config.setUrl("jdbc:mysql://localhost:3306/test");
-        config.setUsername("root");
-        config.setPassword("123456");
+
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        dataSourceConfig.setUrl("jdbc:h2:file:./data/demo");
+        dataSourceConfig.setUsername("sa");
+        dataSourceConfig.setPassword("123456");
+        dataSourceConfig.setDriverClassName("org.h2.Driver");
+
+        config.setUsername(dataSourceConfig.getUsername());
+        config.setPassword(dataSourceConfig.getPassword());
+        config.setUrl(dataSourceConfig.getUrl());
+        config.setDriverClassName(dataSourceConfig.getDriverClassName());
+
         config.setProjectName("demo-project");
         config.setPackageName("com.example.demo");
         config.setOutputPath("./generated-code");
 
         // 生成单表
-        codeGenerator.generateTable(config, "user");
+        codeGenerator.generateTable(config, "T_A1");
     }
 }
