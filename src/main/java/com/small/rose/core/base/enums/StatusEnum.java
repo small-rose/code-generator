@@ -1,4 +1,4 @@
-package com.small.rose.core.base;
+package com.small.rose.core.base.enums;
 
 /**
  * @Project: code-generator

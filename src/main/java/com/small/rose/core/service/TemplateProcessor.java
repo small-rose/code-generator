@@ -73,11 +73,12 @@ public class TemplateProcessor {
 
         // 根据技术栈选择模板路径
         String templatePath = buildTemplatePath(templateName, config);
-
+        log.info("模板路径 {}", templatePath);
         try {
             freemarker.template.Template template = freeMarkerConfig.getTemplate(templatePath);
             template.process(context, writer);
         } catch (Exception e) {
+            e.printStackTrace();
             // 尝试默认模板路径
             templatePath = templateName + ".ftl";
             freemarker.template.Template template = freeMarkerConfig.getTemplate(templatePath);
@@ -138,7 +139,7 @@ public class TemplateProcessor {
      */
     private String buildTemplatePath(String templateName, GeneratorConfig config) {
         String ormFramework = config.getOrmFramework().toLowerCase();
-
+        log.info("ormFramework {}", ormFramework);
         // 根据ORM框架选择模板目录
         switch (ormFramework) {
             case "mybatis-plus":

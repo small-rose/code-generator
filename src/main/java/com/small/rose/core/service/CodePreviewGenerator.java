@@ -1,5 +1,6 @@
 package com.small.rose.core.service;
 
+import com.small.rose.core.base.enums.EnumORMType;
 import com.small.rose.core.bean.GeneratorConfig;
 import com.small.rose.core.bean.TableMeta;
 import lombok.AllArgsConstructor;
@@ -50,7 +51,7 @@ public class CodePreviewGenerator {
                 previews.put("Mapper", mapperCode);
 
                 // 预览XML（如果是MyBatis）
-                if ("mybatis-plus".equals(config.getOrmFramework())) {
+                if (EnumORMType.MYBATIS_PLUS.getCode().equals(config.getOrmFramework())) {
                     String xmlCode = previewMapperXml(table, config);
                     previews.put("MapperXML", xmlCode);
                 }

@@ -1,5 +1,6 @@
 package com.small.rose.core.base;
 
+import com.small.rose.core.base.enums.StatusEnum;
 import lombok.Data;
 
 import java.io.Serializable;

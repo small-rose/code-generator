@@ -31,11 +31,12 @@ public class GeneratorConfig {
     // 项目配置
     private String projectName = "generated-project";
     private String packageName = "com.example.demo";
-    private String author = "Code Generator";
+    private String author = "small rose";
     private String version = "1.0.0";
     private String outputPath = "./generated-code";
 
     // 生成选项
+    private Boolean generateBaseDao = true;
     private Boolean generateEntity = true;
     private Boolean generateMapper = true;
     private Boolean generateService = true;
@@ -43,6 +44,15 @@ public class GeneratorConfig {
     private Boolean generateFrontend = true;
     private Boolean generateSwagger = true;
     private Boolean generateLombok = true;
+
+    /**
+     * 是否生成 create_time update_time create_by update_by
+     */
+    private Boolean generateAuditing = true;
+    /**
+     * 是否生成 逻辑删除
+     */
+    private Boolean generateLogicDelete = false;
 
     // 技术栈选择
     private String ormFramework = "mybatis-plus"; // mybatis-plus, jpa, jdbc

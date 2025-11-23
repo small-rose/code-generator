@@ -26,6 +26,11 @@ public class TableMeta {
     private String instanceName;     // 实例名（小驼峰）
     private List<ColumnMeta> columns; // 列信息
     private ColumnMeta primaryKey;    // 主键
+    private boolean hasPrimaryKey;    // 主键
     private String engine;            // 存储引擎
     private String charset;           // 字符集
+
+    public boolean isHasPrimaryKey(){
+        return primaryKey != null;
+    }
 }

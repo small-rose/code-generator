@@ -1,11 +1,14 @@
-package com.small.rose.test;
+package com.small.rose.core;
 
+import com.small.rose.core.base.enums.EnumORMType;
 import com.small.rose.core.bean.DataSourceConfig;
 import com.small.rose.core.bean.GeneratorConfig;
 import com.small.rose.core.service.CodeGenerator;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * @Project: code-generator
@@ -16,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @Version: v1.0
  */
 @SpringBootTest
+@RunWith( SpringRunner.class)
 public class CodeGeneratorTest {
 
     @Autowired
@@ -29,7 +33,7 @@ public class CodeGeneratorTest {
         dataSourceConfig.setUsername("sa");
         dataSourceConfig.setPassword("123456");
         dataSourceConfig.setDriverClassName("org.h2.Driver");
-
+        config.setDataSourceConfig(dataSourceConfig);
         config.setUsername(dataSourceConfig.getUsername());
         config.setPassword(dataSourceConfig.getPassword());
         config.setUrl(dataSourceConfig.getUrl());
@@ -41,9 +45,10 @@ public class CodeGeneratorTest {
 
         // 只生成实体类进行测试
         config.setGenerateEntity(true);
-        config.setGenerateMapper(false);
-        config.setGenerateService(false);
-        config.setGenerateController(false);
+        config.setOrmFramework(EnumORMType.JPA.getCode());
+        config.setGenerateMapper(true);
+        config.setGenerateService(true);
+        config.setGenerateController(true);
         config.setGenerateFrontend(false);
 
         // 生成项目

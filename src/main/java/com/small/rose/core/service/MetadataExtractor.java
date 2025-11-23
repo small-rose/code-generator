@@ -3,12 +3,15 @@ package com.small.rose.core.service;
 import com.small.rose.core.bean.ColumnMeta;
 import com.small.rose.core.bean.DataSourceConfig;
 import com.small.rose.core.bean.TableMeta;
+import com.small.rose.core.config.SpringResourceReader;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.sql.DataSource;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
@@ -36,7 +39,7 @@ public class MetadataExtractor {
 
 
     private final TypeConverter typeConverter;
-
+    private final SpringResourceReader resourceReader ;
     /**
      * 提取所有表信息
      */
@@ -70,7 +73,7 @@ public class MetadataExtractor {
                     log.debug("跳过系统表: {}", tableName);
                     continue;
                 }
-
+                System.out.println(tableName);
                 TableMeta table = extractTable(config, tableName);
                 table.setTableComment(tableComment != null ? tableComment : tableName);
                 tables.add(table);
@@ -228,7 +231,9 @@ public class MetadataExtractor {
      * 根据URL推断驱动类
      */
     private String inferDriverClassName(String url) {
-        if (url.startsWith("jdbc:mysql:")) {
+        if (url.startsWith("jdbc:h2:")) {
+            return "org.h2.Driver";
+        }else if (url.startsWith("jdbc:mysql:")) {
             return "com.mysql.cj.jdbc.Driver";
         } else if (url.startsWith("jdbc:oracle:")) {
             return "oracle.jdbc.OracleDriver";
@@ -272,7 +277,15 @@ public class MetadataExtractor {
      */
     private boolean isSystemTable(String tableName) {
         if (tableName == null) return true;
-
+        List<String> tbList = new ArrayList<>();
+        try{
+            tbList = resourceReader.readFile("tables/h2.txt");
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        if(!CollectionUtils.isEmpty(tbList) && tbList.contains(tableName)){
+            return true;
+        }
         String lowerName = tableName.toLowerCase();
         return lowerName.startsWith("sys_") ||
                 lowerName.startsWith("qrtz_") ||

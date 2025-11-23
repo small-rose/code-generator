@@ -1,6 +1,7 @@
 package com.small.rose.core.service;
 
 
+import com.small.rose.core.base.enums.EnumORMType;
 import com.small.rose.core.bean.GeneratorConfig;
 import com.small.rose.core.bean.TableMeta;
 import lombok.AllArgsConstructor;
@@ -43,11 +44,12 @@ public class CodeGenerator {
 
             // 3. 生成每张表的代码
             for (TableMeta table : tables) {
+                log.info("开始生成 {} 表的相关类", table.getTableName());
                 generateTableCode(table, config);
             }
 
             // 4. 生成配置文件
-            generateConfigFiles(config, tables);
+            //generateConfigFiles(config, tables);
 
             log.info("项目生成完成: {}", config.getOutputPath());
 
@@ -99,8 +101,19 @@ public class CodeGenerator {
             if (config.getGenerateEntity()) {
                 generateEntity(table, config);
             }
-            if (config.getGenerateMapper()) {
-                generateMapper(table, config);
+
+            // 预览XML（如果是MyBatis）
+            if(EnumORMType.MYBATIS_PLUS.getCode().equals(config.getOrmFramework())){
+                if(config.getGenerateMapper()){
+                    generateMapper(table, config);
+                    generateMapperXml(table, config);
+                }
+            }else if(EnumORMType.JPA.getCode().equals(config.getOrmFramework())){
+                generateBase(table, config);
+                generateBaseImpl(table, config);
+                generateJPARepository(table, config);
+            }else if(EnumORMType.JDBC_TEMPLATE.getCode().equals(config.getOrmFramework())){
+
             }
             if (config.getGenerateService()) {
                 generateService(table, config);
@@ -129,9 +142,35 @@ public class CodeGenerator {
         fileWriter.write(filePath, content);
     }
 
+    private void generateMapperXml(TableMeta table, GeneratorConfig config) {
+        String content = templateProcessor.process("mapper-xml", table, config);
+        String filePath = buildResourcePath(config, "mapper", table.getClassName() + "Mapper.xml");
+        fileWriter.write(filePath, content);
+    }
+
+
+
+    private void generateJPARepository(TableMeta table, GeneratorConfig config) {
+        String content = templateProcessor.process("repository", table, config);
+        String filePath = buildResourcePath(config, "repository", table.getClassName() + "Repository.java");
+        fileWriter.write(filePath, content);
+    }
+
+    private void generateBase(TableMeta table, GeneratorConfig config) {
+        String content = templateProcessor.process("base-dao", table, config);
+        String filePath = buildFilePath(config, "base","JpaBaseDao.java");
+        fileWriter.write(filePath, content);
+    }
+
+    private void generateBaseImpl(TableMeta table, GeneratorConfig config) {
+        String content = templateProcessor.process("base-dao-impl", table, config);
+        String filePath = buildFilePath(config, "base", "JpaBaseDaoImpl.java");
+        fileWriter.write(filePath, content);
+    }
+
     private void generateService(TableMeta table, GeneratorConfig config) {
         String interfaceContent = templateProcessor.process("service", table, config);
-        String interfacePath = buildFilePath(config, "service", table.getClassName() + "Service.java");
+        String interfacePath = buildFilePath(config, "service/interfaces", table.getClassName() + "Service.java");
         fileWriter.write(interfacePath, interfaceContent);
 
         String implContent = templateProcessor.process("service-impl", table, config);
